@@ -1,0 +1,75 @@
+.messages-page{
+
+    padding:25px;
+
+}
+
+.messages-page .page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.messages-page h2{
+
+    font-weight:700;
+
+}
+
+.search-box{
+
+    position:relative;
+
+}
+
+.search-box svg{
+
+    position:absolute;
+
+    top:50%;
+
+    left:15px;
+
+    transform:translateY(-50%);
+
+    color:#777;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:12px 15px 12px 42px;
+
+    border-radius:8px;
+
+    border:1px solid #ddd;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+.table select{
+
+    width:120px;
+
+}
+
+.badge{
+
+    padding:8px 14px;
+
+    font-size:13px;
+
+}

@@ -1,0 +1,185 @@
+/* ===========================
+   Website Settings
+=========================== */
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.settings-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.settings-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #222;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+}
+
+/* ===========================
+   Grid
+=========================== */
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* ===========================
+   Form
+=========================== */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: .3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212,175,55,.15);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ===========================
+   Save Button
+=========================== */
+
+.save-btn {
+    margin-top: 30px;
+    background: #d4af37;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.save-btn:hover {
+    background: #b9901d;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.settings-card input,
+.settings-card textarea,
+.settings-card select {
+
+    color: #111 !important;
+
+    background: #fff;
+
+}
+
+.settings-card input::placeholder,
+.settings-card textarea::placeholder {
+
+    color: #777;
+
+}
+
+/* ================= HERO VIDEO ================= */
+
+.settings-card input[type="file"]{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    color:#222;
+
+    cursor:pointer;
+
+}
+
+.settings-card input[type="file"]::-webkit-file-upload-button{
+
+    background:#1d4ed8;
+
+    color:#fff;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    margin-right:15px;
+
+}
+
+.settings-card video{
+
+    width:100%;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.15);
+
+}

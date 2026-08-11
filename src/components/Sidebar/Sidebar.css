@@ -1,0 +1,409 @@
+/* ===================================================
+   GOOGLE FONT
+=================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* ===================================================
+   SIDEBAR
+=================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:280px;
+
+    height:100vh;
+
+    background:#181818;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    border-right:1px solid rgba(201,162,39,.18);
+
+    transition:.35s ease;
+
+    overflow:hidden;
+
+    z-index:1000;
+
+}
+
+.sidebar.collapsed{
+
+    width:90px;
+
+}
+
+/* ===================================================
+   HEADER
+=================================================== */
+
+.sidebar-header{
+
+    padding:28px 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+}
+
+.sidebar-logo{
+
+    width:56px;
+
+    height:56px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+}
+
+.sidebar-company{
+
+    overflow:hidden;
+
+}
+
+.sidebar-company h3{
+
+    font-family:"Cinzel",serif;
+
+    color:#C9A227;
+
+    font-size:15px;
+
+    margin:0;
+
+    white-space:nowrap;
+
+}
+
+.sidebar-company span{
+
+    color:#d5d5d5;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+}
+
+/* ===================================================
+   COLLAPSE BUTTON
+=================================================== */
+
+.collapse-btn{
+
+    position:absolute;
+
+    top:95px;
+
+    right:-15px;
+
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#C9A227;
+
+    color:#111;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+
+    transition:.3s;
+
+}
+
+.collapse-btn:hover{
+
+    transform:scale(1.1);
+
+}
+
+/* ===================================================
+   MENU
+=================================================== */
+
+.sidebar-menu{
+
+    flex:1;
+
+    padding:25px 0;
+
+    overflow-y:auto;
+
+}
+
+.sidebar-menu::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb{
+
+    background:#C9A227;
+
+    border-radius:10px;
+
+}
+
+/* ===================================================
+   MENU ITEM
+=================================================== */
+
+.menu-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    height:56px;
+
+    padding:0 25px;
+
+    color:#d8d8d8;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    position:relative;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+.menu-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:4px;
+
+    height:0;
+
+    background:#C9A227;
+
+    transition:.3s;
+
+}
+
+.menu-item:hover{
+
+    background:rgba(201,162,39,.12);
+
+    color:#C9A227;
+
+    padding-left:32px;
+
+}
+
+.menu-item:hover::before{
+
+    height:65%;
+
+}
+
+.menu-item.active{
+
+    background:rgba(201,162,39,.18);
+
+    color:#C9A227;
+
+}
+
+.menu-item.active::before{
+
+    height:70%;
+
+}
+
+.menu-icon{
+
+    font-size:19px;
+
+    min-width:22px;
+
+    transition:.3s;
+
+}
+
+.menu-item:hover .menu-icon{
+
+    transform:scale(1.15);
+
+}
+
+/* ===================================================
+   FOOTER
+=================================================== */
+
+.sidebar-footer{
+
+    padding:20px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+}
+
+.logout-btn{
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#202020;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.logout-btn:hover{
+
+    background:#C9A227;
+
+    color:#111;
+
+}
+
+/* ===================================================
+   COLLAPSED MODE
+=================================================== */
+
+.sidebar.collapsed .sidebar-company{
+
+    display:none;
+
+}
+
+.sidebar.collapsed .menu-item{
+
+    justify-content:center;
+
+    padding:0;
+
+}
+
+.sidebar.collapsed .menu-item span{
+
+    display:none;
+
+}
+
+.sidebar.collapsed .logout-btn{
+
+    justify-content:center;
+
+}
+
+.sidebar.collapsed .logout-btn span{
+
+    display:none;
+
+}
+
+/* ===================================================
+   MOBILE
+=================================================== */
+
+@media(max-width:992px){
+
+.sidebar{
+
+    transform:translateX(-100%);
+
+}
+
+.sidebar.show{
+
+    transform:translateX(0);
+
+}
+
+.collapse-btn{
+
+    display:none;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.sidebar{
+
+    width:280px;
+
+    left:-280px;
+
+    transform:none;
+
+}
+
+.sidebar.show{
+
+    left:0;
+
+}
+
+}

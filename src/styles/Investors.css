@@ -1,0 +1,527 @@
+/* ===========================
+   Investors Page
+=========================== */
+
+.investors-page {
+  width: 100%;
+}
+
+.investor-form-page {
+  width: 100%;
+  padding: 6px 0 24px;
+}
+
+.investor-form-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+  border: 1px solid #eef2f7;
+}
+
+.investor-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.investor-form-header h2 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  color: #0f172a;
+}
+
+.investor-form-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.investor-form-pill {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.investor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.investor-form-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.investor-form-section h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: #0f766e;
+}
+
+.investor-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.investor-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.investor-field-full {
+  grid-column: 1 / -1;
+}
+
+.investor-field label {
+  font-weight: 600;
+  color: #334155;
+  font-size: 14px;
+}
+
+.investor-field input,
+.investor-field select,
+.investor-field textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 14px;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.investor-field input:focus,
+.investor-field select:focus,
+.investor-field textarea:focus {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+.investor-field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.investor-upload-box {
+  border: 1px dashed #94a3b8;
+  border-radius: 12px;
+  padding: 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.image-preview img {
+  max-width: 180px;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.investor-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.secondary-btn,
+.primary-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.secondary-btn {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: #fff;
+}
+
+.secondary-btn:hover,
+.primary-btn:hover {
+  transform: translateY(-1px);
+}
+
+.primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.investors-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.investors-header h2 {
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 5px;
+}
+
+.investors-header p {
+  color: #64748b;
+  font-size: 15px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f766e;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .3s;
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  background: #115e59;
+}
+
+/* ===========================
+   Filters
+=========================== */
+
+.investor-filters {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #dbe2ea;
+  padding: 12px 15px;
+  border-radius: 10px;
+}
+
+.search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.search-box svg {
+  color: #94a3b8;
+}
+
+.investor-filters select {
+  min-width: 180px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #dbe2ea;
+  background: white;
+  cursor: pointer;
+}
+
+/* ===========================
+   Table
+=========================== */
+
+.investor-table {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.05);
+}
+
+.investor-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.investor-table thead {
+  background: #f8fafc;
+}
+
+.investor-table th {
+  padding: 16px;
+  text-align: left;
+  color: #334155;
+  font-size: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.investor-table td {
+  padding: 16px;
+  border-bottom: 1px solid #eef2f7;
+  color: #475569;
+}
+
+.investor-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* ===========================
+   Avatar
+=========================== */
+
+.investor-avatar {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #dbeafe;
+}
+
+/* ===========================
+   Badges
+=========================== */
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge.pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.badge.inactive {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ===========================
+   Action Buttons
+=========================== */
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  margin-right: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.view-btn {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.view-btn:hover {
+  background: #0284c7;
+  color: white;
+}
+
+.edit-btn {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+  color: white;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* ===========================
+   Pagination
+=========================== */
+
+.pagination {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.pagination button {
+  border: none;
+  background: #0f766e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: #475569;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+
+  .investors-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .investor-filters {
+    flex-direction: column;
+  }
+
+  .search-box,
+  .investor-filters select {
+    width: 100%;
+  }
+
+  .investor-table {
+    font-size: 14px;
+  }
+
+}
+
+/* =============================
+   View Investor
+============================= */
+
+.investor-view-page{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+}
+
+.page-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.investor-profile-card{
+  background:#fff;
+  border-radius:15px;
+  padding:35px;
+  text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+}
+
+.investor-large-avatar{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid #f3f4f6;
+  margin-bottom:20px;
+}
+
+.investor-profile-card h2{
+  margin-bottom:8px;
+  color:#1e293b;
+}
+
+.investor-profile-card p{
+  color:#64748b;
+  margin-bottom:15px;
+}
+
+.details-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:25px;
+}
+
+.detail-card{
+  background:#fff;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 10px 20px rgba(0,0,0,.05);
+}
+
+.detail-card h3{
+  margin-bottom:20px;
+  color:#0f766e;
+}
+
+.detail-item{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  margin-bottom:18px;
+  color:#475569;
+}
+
+.detail-item svg{
+  color:#0f766e;
+  width:18px;
+}
+
+.remarks-card p{
+  margin-top:10px;
+  color:#64748b;
+  line-height:1.8;
+}

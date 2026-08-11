@@ -1,0 +1,313 @@
+/* ===========================================
+   Applications Page
+=========================================== */
+
+.applications-page {
+  padding: 20px;
+}
+
+/* ===========================================
+   Header
+=========================================== */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-header h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 6px;
+}
+
+.page-header p {
+  color: #64748b;
+  margin: 0;
+}
+
+/* ===========================================
+   Filter Card
+=========================================== */
+
+.application-filter {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.application-filter .card-body {
+  padding: 25px;
+}
+
+/* ===========================================
+   Search Box
+=========================================== */
+
+.search-box {
+  position: relative;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.search-box input {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #dbe4ee;
+  padding-left: 45px;
+  transition: .3s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #c89b3c;
+  box-shadow: 0 0 0 .18rem rgba(200,155,60,.15);
+}
+
+/* ===========================================
+   Select
+=========================================== */
+
+.application-filter .form-select {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #dbe4ee;
+}
+
+.application-filter .form-select:focus {
+  border-color: #c89b3c;
+  box-shadow: 0 0 0 .18rem rgba(200,155,60,.15);
+}
+
+/* ===========================================
+   Table Card
+=========================================== */
+
+.table-responsive {
+  border-radius: 18px;
+}
+
+.table {
+  margin: 0;
+}
+
+.table thead {
+  background: #f8fafc;
+}
+
+.table thead th {
+  padding: 18px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #334155;
+  border: none;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 18px;
+  vertical-align: middle;
+  border-color: #edf2f7;
+}
+
+.table-hover tbody tr {
+  transition: .25s;
+}
+
+.table-hover tbody tr:hover {
+  background: #fcfcfc;
+}
+
+/* ===========================================
+   Applicant Name
+=========================================== */
+
+.table strong {
+  color: #111827;
+  font-size: 15px;
+}
+
+/* ===========================================
+   Badges
+=========================================== */
+
+.badge {
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bg-warning {
+  background: #facc15 !important;
+  color: #111827;
+}
+
+.bg-primary {
+  background: #2563eb !important;
+}
+
+.bg-info {
+  background: #06b6d4 !important;
+}
+
+.bg-success {
+  background: #16a34a !important;
+}
+
+.bg-danger {
+  background: #dc2626 !important;
+}
+
+.bg-secondary {
+  background: #64748b !important;
+}
+
+/* ===========================================
+   Buttons
+=========================================== */
+
+.btn-sm {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-dark:hover {
+  transform: translateY(-2px);
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================================
+   Status Select
+=========================================== */
+
+.table .form-select-sm {
+  min-width: 150px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+/* ===========================================
+   Empty State
+=========================================== */
+
+.card .text-center h5 {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ===========================================
+   Loading
+=========================================== */
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* ===========================================
+   Responsive
+=========================================== */
+
+@media (max-width: 992px) {
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .applications-page {
+    padding: 10px;
+  }
+
+  .application-filter .card-body {
+    padding: 18px;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .table td {
+    padding: 14px 18px;
+    border: none;
+  }
+
+  .table td::before {
+    display: block;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 5px;
+  }
+
+  .table td:nth-child(1)::before {
+    content: "Applicant";
+  }
+
+  .table td:nth-child(2)::before {
+    content: "Job";
+  }
+
+  .table td:nth-child(3)::before {
+    content: "Email";
+  }
+
+  .table td:nth-child(4)::before {
+    content: "Phone";
+  }
+
+  .table td:nth-child(5)::before {
+    content: "Applied";
+  }
+
+  .table td:nth-child(6)::before {
+    content: "Status";
+  }
+
+  .table td:nth-child(7)::before {
+    content: "Actions";
+  }
+
+  .table td:last-child .d-flex {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+}

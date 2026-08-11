@@ -1,0 +1,357 @@
+/* ===========================================
+   PAGE
+=========================================== */
+
+.job-form {
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* ===========================================
+   CARDS
+=========================================== */
+
+.job-form .card {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
+  transition: .3s ease;
+}
+
+.job-form .card:hover {
+  transform: translateY(-2px);
+}
+
+.job-form .card-header {
+  background: #fff;
+  border-bottom: 1px solid #edf2f7;
+  padding: 18px 25px;
+}
+
+.job-form .card-header h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.job-form .card-body {
+  padding: 30px;
+}
+
+/* ===========================================
+   LABELS
+=========================================== */
+
+.job-form label {
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+/* ===========================================
+   INPUTS
+=========================================== */
+
+.job-form .form-control,
+.job-form .form-select {
+
+  border-radius: 12px;
+  border: 1px solid #d9e2ec;
+  min-height: 48px;
+  transition: .3s;
+  box-shadow: none;
+
+}
+
+.job-form textarea.form-control {
+  min-height: 220px;
+  resize: vertical;
+}
+
+.job-form .form-control:focus,
+.job-form .form-select:focus {
+
+  border-color: #c89b3c;
+  box-shadow: 0 0 0 .18rem rgba(200,155,60,.15);
+
+}
+
+.job-form .input-group-text {
+
+  background: #f8fafc;
+  border-radius: 12px 0 0 12px;
+  border-color: #d9e2ec;
+  color: #c89b3c;
+
+}
+
+/* ===========================================
+   UPLOAD
+=========================================== */
+
+.upload-box {
+
+  width: 100%;
+  min-height: 330px;
+  border: 2px dashed #d8dee8;
+  border-radius: 18px;
+  background: #fafbfd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .35s;
+  overflow: hidden;
+
+}
+
+.upload-box:hover {
+
+  border-color: #c89b3c;
+  background: #fffdf8;
+
+}
+
+.upload-placeholder {
+
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 60px 25px;
+
+}
+
+.upload-placeholder svg {
+
+  color: #c89b3c;
+  margin-bottom: 18px;
+
+}
+
+.upload-placeholder h5 {
+
+  font-weight: 700;
+  color: #1F2937;
+
+}
+
+.upload-placeholder p {
+
+  color: #64748b;
+  margin-top: 10px;
+
+}
+
+/* ===========================================
+   IMAGE
+=========================================== */
+
+.image-preview {
+
+  position: relative;
+  width: 100%;
+  height: 330px;
+
+}
+
+.image-preview img {
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+.remove-image {
+
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #ef4444;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: .3s;
+
+}
+
+.remove-image:hover {
+
+  transform: scale(1.08);
+
+}
+
+/* ===========================================
+   DYNAMIC LISTS
+=========================================== */
+
+.job-form .input-group {
+
+  margin-bottom: 15px;
+
+}
+
+.job-form .btn-outline-danger {
+
+  border-radius: 0 12px 12px 0;
+
+}
+
+.job-form .btn-warning {
+
+  background: #c89b3c;
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: .3s;
+
+}
+
+.job-form .btn-warning:hover {
+
+  background: #af832d;
+  color: white;
+
+}
+
+/* ===========================================
+   SWITCHES
+=========================================== */
+
+.form-check {
+
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #edf2f7;
+  background: #fafafa;
+
+}
+
+.form-check-input {
+
+  width: 46px;
+  height: 24px;
+  cursor: pointer;
+
+}
+
+.form-check-input:checked {
+
+  background-color: #1E4D3B;
+  border-color: #1E4D3B;
+
+}
+
+.form-check-label {
+
+  margin-left: 12px;
+  font-weight: 600;
+
+}
+
+/* ===========================================
+   FOOTER
+=========================================== */
+
+.job-form .btn-light {
+
+  min-width: 140px;
+  border-radius: 12px;
+  font-weight: 600;
+
+}
+
+.job-form .btn-warning {
+
+  min-width: 180px;
+  border-radius: 12px;
+  font-weight: 700;
+
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media (max-width:992px){
+
+.job-form .card-body{
+
+padding:20px;
+
+}
+
+.image-preview{
+
+height:250px;
+
+}
+
+.upload-box{
+
+min-height:250px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.job-form .card-header{
+
+padding:15px 18px;
+
+}
+
+.job-form .card-body{
+
+padding:18px;
+
+}
+
+.job-form .btn-light,
+.job-form .btn-warning{
+
+width:100%;
+
+}
+
+.job-form .d-flex.justify-content-end{
+
+flex-direction:column;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.upload-placeholder{
+
+padding:40px 15px;
+
+}
+
+.upload-placeholder h5{
+
+font-size:18px;
+
+}
+
+.job-form textarea{
+
+min-height:180px;
+
+}
+
+}
