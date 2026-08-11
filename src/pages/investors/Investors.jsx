@@ -14,7 +14,7 @@ import {
   deleteInvestor,
 } from "../../services/investorService";
 
-import "../../styles/investors.css";
+import "../../styles/Investors.css";
 
 export default function Investors() {
 

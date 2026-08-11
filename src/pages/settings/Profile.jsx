@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Profile.css";
+import "./profile.css";
 import { toast } from "../../utils/toast";
 
 import AdminLayout from "../../layouts/AdminLayout";
@@ -15,8 +15,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-import axios from "axios";
-import { getProfile as getProfileService } from "../../services/profileService";
+import { getProfile as getProfileService, updateProfile } from "../../services/profileService";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
@@ -80,15 +79,7 @@ export default function Profile() {
         formData.append("profileImage", image);
       }
 
-      await axios.put(
-        "http://localhost:5000/api/profile",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await updateProfile(formData);
 
       
       toast.success("Profile updated successfully");

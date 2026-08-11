@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import AdminLayout from "../../layouts/AdminLayout";
 
-import "./ChangePassword.css";
+import "./Changepassword.css";
 
 import { toast } from "../../utils/toast";
 
