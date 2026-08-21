@@ -1,420 +1,862 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AdminLayout from "../../layouts/AdminLayout";
 
-import { createEmployee } from "../../services/employeeService";
+import {
+  createEmployee,
+  getEmployees,
+} from "../../services/employeeService";
 
 import { toast } from "../../utils/toast";
 
 import "./Employees.css";
 
 export default function AddEmployee() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState("");
+  const [employees, setEmployees] = useState([]);
 
-    const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    cnic: "",
 
-    const [preview, setPreview] = useState("");
+    employeeType: "Department",
+    section: "",
+    department: "",
+    designation: "",
 
-    const [form, setForm] = useState({
+    joiningDate: "",
+    address: "",
+    status: "Active",
 
-        fullName: "",
+    office: "Head Office",
 
-        email: "",
+    reportsTo: "",
+    isManagingDirector: false,
 
-        phone: "",
+    message: "",
+    order: 0,
 
-        cnic: "",
+    profileImage: null,
+  });
 
-        department: "",
+  // =====================================
+  // Load Employees For "Reports To"
+  // =====================================
 
-        designation: "",
+  useEffect(() => {
+    const loadEmployees = async () => {
+      try {
+        const data = await getEmployees(
+          1,
+          "",
+          "Active",
+          "",
+          ""
+        );
 
-        joiningDate: "",
-
-        address: "",
-
-        status: "Active",
-
-        profileImage: null,
-
-    });
-
-    const handleChange = (e) => {
-
-        const { name, value } = e.target;
-
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-
+        setEmployees(data.employees || []);
+      } catch (err) {
+        console.error("Failed to load employees:", err);
+      }
     };
 
-    const handleImage = (e) => {
+    loadEmployees();
+  }, []);
 
-        const file = e.target.files[0];
+  // =====================================
+  // Handle Input
+  // =====================================
 
-        if (!file) return;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-        setForm((prev) => ({
-            ...prev,
-            profileImage: file,
-        }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-        setPreview(URL.createObjectURL(file));
+  // =====================================
+  // Handle Employee Type
+  // =====================================
 
-    };
+  const handleEmployeeType = (e) => {
+    const value = e.target.value;
 
-    const handleSubmit = async (e) => {
+    setForm((prev) => ({
+      ...prev,
 
-        e.preventDefault();
+      employeeType: value,
 
-        try {
+      section: "",
+      department: "",
+      reportsTo: "",
 
-            setLoading(true);
+      isManagingDirector:
+        value === "Management"
+          ? prev.isManagingDirector
+          : false,
+    }));
+  };
 
-            const formData = new FormData();
+  // =====================================
+  // Handle Managing Director
+  // =====================================
 
-            Object.keys(form).forEach((key) => {
+  const handleManagingDirector = (e) => {
+    const checked = e.target.checked;
 
-                formData.append(key, form[key]);
+    setForm((prev) => ({
+      ...prev,
+      isManagingDirector: checked,
 
-            });
+      designation: checked
+        ? "Managing Director"
+        : prev.designation,
+    }));
+  };
 
-            await createEmployee(formData);
+  // =====================================
+  // Handle Image
+  // =====================================
 
-            toast.success("Employee added successfully.");
+  const handleImage = (e) => {
+    const file = e.target.files[0];
 
-            navigate("/employees");
+    if (!file) return;
 
-        } catch (err) {
+    setForm((prev) => ({
+      ...prev,
+      profileImage: file,
+    }));
 
-            toast.error(
+    setPreview(URL.createObjectURL(file));
+  };
 
-                err.response?.data?.message ||
+  // =====================================
+  // Submit
+  // =====================================
 
-                "Failed to add employee."
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+
+      Object.keys(form).forEach((key) => {
+        if (key === "profileImage") {
+          if (form.profileImage) {
+            formData.append(
+              "profileImage",
+              form.profileImage
             );
-
-        } finally {
-
-            setLoading(false);
-
+          }
+        } else if (key === "isManagingDirector") {
+          formData.append(
+            key,
+            form.isManagingDirector
+          );
+        } else {
+          formData.append(
+            key,
+            form[key] ?? ""
+          );
         }
-
-    };
-
-    return (
-
-        <AdminLayout>
-
-            <div className="employee-form-page">
-
-                <div className="employee-form-card">
-
-                    <h2>Add Employee</h2>
-
-                    <p>Create a new employee record.</p>
-
-                    <form onSubmit={handleSubmit}>
-
-                        <div className="row">
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Full Name</label>
-
-                                <input
-
-                                    type="text"
-
-                                    className="form-control"
-
-                                    name="fullName"
-
-                                    value={form.fullName}
-
-                                    onChange={handleChange}
-
-                                    required
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Email</label>
-
-                                <input
-
-                                    type="email"
-
-                                    className="form-control"
-
-                                    name="email"
-
-                                    value={form.email}
-
-                                    onChange={handleChange}
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Phone</label>
-
-                                <input
-
-                                    type="text"
-
-                                    className="form-control"
-
-                                    name="phone"
-
-                                    value={form.phone}
-
-                                    onChange={handleChange}
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>CNIC</label>
-
-                                <input
-
-                                    type="text"
-
-                                    className="form-control"
-
-                                    name="cnic"
-
-                                    value={form.cnic}
-
-                                    onChange={handleChange}
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Department</label>
-
-                                <select
-
-                                    className="form-select"
-
-                                    name="department"
-
-                                    value={form.department}
-
-                                    onChange={handleChange}
-
-                                    required
-
-                                >
-
-                                    <option value="">Select</option>
-
-                                    <option>Mining</option>
-
-                                    <option>HR</option>
-
-                                    <option>Finance</option>
-
-                                    <option>Operations</option>
-
-                                    <option>Safety</option>
-
-                                    <option>Administration</option>
-
-                                </select>
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Designation</label>
-
-                                <input
-
-                                    type="text"
-
-                                    className="form-control"
-
-                                    name="designation"
-
-                                    value={form.designation}
-
-                                    onChange={handleChange}
-
-                                    required
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Joining Date</label>
-
-                                <input
-
-                                    type="date"
-
-                                    className="form-control"
-
-                                    name="joiningDate"
-
-                                    value={form.joiningDate}
-
-                                    onChange={handleChange}
-
-                                    required
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-3">
-
-                                <label>Status</label>
-
-                                <select
-
-                                    className="form-select"
-
-                                    name="status"
-
-                                    value={form.status}
-
-                                    onChange={handleChange}
-
-                                >
-
-                                    <option>Active</option>
-
-                                    <option>Inactive</option>
-
-                                </select>
-
-                            </div>
-
-                            <div className="col-12 mb-3">
-
-                                <label>Address</label>
-
-                                <textarea
-
-                                    className="form-control"
-
-                                    rows="3"
-
-                                    name="address"
-
-                                    value={form.address}
-
-                                    onChange={handleChange}
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-4">
-
-                                <label>Profile Image</label>
-
-                                <input
-
-                                    type="file"
-
-                                    className="form-control"
-
-                                    accept="image/*"
-
-                                    onChange={handleImage}
-
-                                />
-
-                            </div>
-
-                            <div className="col-md-6 mb-4 d-flex align-items-center justify-content-center">
-
-                                {preview ? (
-
-                                    <img
-
-                                        src={preview}
-
-                                        alt="Preview"
-
-                                        className="employee-preview"
-
-                                    />
-
-                                ) : (
-
-                                    <div className="employee-placeholder">
-
-                                        Image Preview
-
-                                    </div>
-
-                                )}
-
-                            </div>
-
-                        </div>
-
-                        <div className="employee-form-actions">
-
-                            <button
-
-                                type="button"
-
-                                className="btn btn-secondary"
-
-                                onClick={() => navigate(-1)}
-
-                            >
-
-                                Cancel
-
-                            </button>
-
-                            <button
-
-                                type="submit"
-
-                                className="btn btn-warning"
-
-                                disabled={loading}
-
-                            >
-
-                                {loading ? "Saving..." : "Save Employee"}
-
-                            </button>
-
-                        </div>
-
-                    </form>
-
+      });
+
+      await createEmployee(formData);
+
+      toast.success(
+        "Employee added successfully."
+      );
+
+      navigate("/employees");
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+          "Failed to add employee."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // =====================================
+  // Filter Possible Managers
+  // =====================================
+
+  const reportingEmployees = employees.filter(
+    (employee) =>
+      employee._id &&
+      employee._id !== form.reportsTo
+  );
+
+  return (
+    <AdminLayout>
+      <div className="employee-form-page">
+
+        <div className="employee-form-card">
+
+          <h2>Add Employee</h2>
+
+          <p>
+            Create a new employee and assign their
+            organizational position.
+          </p>
+
+          <form onSubmit={handleSubmit}>
+
+            {/* ================================= */}
+            {/* PERSONAL INFORMATION */}
+            {/* ================================= */}
+
+            <div className="employee-form-section">
+
+              <h4>
+                Personal Information
+              </h4>
+
+              <div className="row">
+
+                <div className="col-md-6 mb-3">
+                  <label>
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="fullName"
+                    value={form.fullName}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
+
+                <div className="col-md-6 mb-3">
+                  <label>
+                    Email
+                  </label>
+
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-3">
+                  <label>
+                    Phone
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="col-md-6 mb-3">
+                  <label>
+                    CNIC
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="cnic"
+                    value={form.cnic}
+                    onChange={handleChange}
+                  />
+                </div>
+
+              </div>
 
             </div>
 
-        </AdminLayout>
+            {/* ================================= */}
+            {/* ORGANIZATIONAL PLACEMENT */}
+            {/* ================================= */}
 
-    );
+            <div className="employee-form-section">
 
+              <h4>
+                Organizational Placement
+              </h4>
+
+              <div className="row">
+
+                {/* Employee Type */}
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Where does this employee
+                    belong?
+                  </label>
+
+                  <select
+                    className="form-select"
+                    value={form.employeeType}
+                    onChange={handleEmployeeType}
+                    required
+                  >
+
+                    <option value="Management">
+                      Management
+                    </option>
+
+                    <option value="Department">
+                      Departmental Team
+                    </option>
+
+                    <option value="Danin Chitral">
+                      Danin Chitral
+                    </option>
+
+                    <option value="Dara Adam Khel">
+                      Dara Adam Khel
+                    </option>
+
+                  </select>
+
+                </div>
+
+                {/* Section */}
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Section
+                  </label>
+
+                  {form.employeeType ===
+                  "Management" ? (
+
+                    <select
+                      className="form-select"
+                      name="section"
+                      value={form.section}
+                      onChange={handleChange}
+                    >
+
+                      <option value="">
+                        Select Section
+                      </option>
+
+                      <option value="Board of Directors">
+                        Board of Directors
+                      </option>
+
+                      <option value="General Management">
+                        General Management
+                      </option>
+
+                      <option value="Administration">
+                        Administration
+                      </option>
+
+                    </select>
+
+                  ) : form.employeeType ===
+                    "Department" ? (
+
+                    <select
+                      className="form-select"
+                      name="section"
+                      value={form.section}
+                      onChange={handleChange}
+                    >
+
+                      <option value="">
+                        Select Department
+                      </option>
+
+                      <option value="Mining">
+                        Mining
+                      </option>
+
+                      <option value="Operations">
+                        Operations
+                      </option>
+
+                      <option value="Finance">
+                        Finance
+                      </option>
+
+                      <option value="HR">
+                        HR
+                      </option>
+
+                      <option value="Audit">
+                        Audit
+                      </option>
+
+                      <option value="Purchase">
+                        Purchase
+                      </option>
+
+                      <option value="Sales">
+                        Sales
+                      </option>
+
+                      <option value="Safety & Security">
+                        Safety & Security
+                      </option>
+
+                      <option value="Administration">
+                        Administration
+                      </option>
+
+                    </select>
+
+                  ) : form.employeeType ===
+                    "Danin Chitral" ? (
+
+                    <select
+                      className="form-select"
+                      name="section"
+                      value={form.section}
+                      onChange={handleChange}
+                    >
+
+                      <option value="">
+                        Select Section
+                      </option>
+
+                      <option value="Project Management">
+                        Project Management
+                      </option>
+
+                      <option value="Mining Operations">
+                        Mining Operations
+                      </option>
+
+                      <option value="Operations">
+                        Operations
+                      </option>
+
+                      <option value="Supervisors">
+                        Supervisors
+                      </option>
+
+                      <option value="Camp">
+                        Camp
+                      </option>
+
+                      <option value="Accounts">
+                        Accounts
+                      </option>
+
+                      <option value="Geology">
+                        Geology
+                      </option>
+
+                      <option value="Field Staff">
+                        Field Staff
+                      </option>
+
+                    </select>
+
+                  ) : (
+
+                    <select
+                      className="form-select"
+                      name="section"
+                      value={form.section}
+                      onChange={handleChange}
+                    >
+
+                      <option value="">
+                        Select Section
+                      </option>
+
+                      <option value="Management">
+                        Management
+                      </option>
+
+                      <option value="Operations">
+                        Operations
+                      </option>
+
+                      <option value="Accounts">
+                        Accounts
+                      </option>
+
+                      <option value="Administration">
+                        Administration
+                      </option>
+
+                      <option value="Field Staff">
+                        Field Staff
+                      </option>
+
+                    </select>
+
+                  )}
+
+                </div>
+
+                {/* Department */}
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Department
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="department"
+                    value={form.department}
+                    onChange={handleChange}
+                    placeholder="Optional"
+                  />
+
+                </div>
+
+                {/* Designation */}
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Designation
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="designation"
+                    value={form.designation}
+                    onChange={handleChange}
+                    disabled={
+                      form.isManagingDirector
+                    }
+                    required
+                  />
+
+                </div>
+
+                {/* Managing Director */}
+
+                {form.employeeType ===
+                  "Management" && (
+
+                  <div className="col-12 mb-3">
+
+                    <div className="form-check">
+
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="managingDirector"
+                        checked={
+                          form.isManagingDirector
+                        }
+                        onChange={
+                          handleManagingDirector
+                        }
+                      />
+
+                      <label
+                        className="form-check-label"
+                        htmlFor="managingDirector"
+                      >
+                        This employee is the
+                        Managing Director
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                )}
+
+                {/* Reports To */}
+
+                {!form.isManagingDirector && (
+
+                  <div className="col-md-6 mb-3">
+
+                    <label>
+                      Reports To
+                    </label>
+
+                    <select
+                      className="form-select"
+                      name="reportsTo"
+                      value={form.reportsTo}
+                      onChange={handleChange}
+                    >
+
+                      <option value="">
+                        None
+                      </option>
+
+                      {reportingEmployees.map(
+                        (employee) => (
+
+                          <option
+                            key={employee._id}
+                            value={employee._id}
+                          >
+                            {employee.fullName}
+                            {" - "}
+                            {employee.designation}
+                          </option>
+
+                        )
+                      )}
+
+                    </select>
+
+                  </div>
+
+                )}
+
+                {/* Order */}
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Display Order
+                  </label>
+
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="order"
+                    value={form.order}
+                    onChange={handleChange}
+                    min="0"
+                  />
+
+                  <small className="text-muted">
+                    Lower numbers appear first.
+                  </small>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* ================================= */}
+            {/* LOCATION & EMPLOYMENT */}
+            {/* ================================= */}
+
+            <div className="employee-form-section">
+
+              <h4>
+                Employment Information
+              </h4>
+
+              <div className="row">
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Joining Date
+                  </label>
+
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="joiningDate"
+                    value={form.joiningDate}
+                    onChange={handleChange}
+                    required
+                  />
+
+                </div>
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Status
+                  </label>
+
+                  <select
+                    className="form-select"
+                    name="status"
+                    value={form.status}
+                    onChange={handleChange}
+                  >
+
+                    <option value="Active">
+                      Active
+                    </option>
+
+                    <option value="Inactive">
+                      Inactive
+                    </option>
+
+                  </select>
+
+                </div>
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Office
+                  </label>
+
+                  <select
+                    className="form-select"
+                    name="office"
+                    value={form.office}
+                    onChange={handleChange}
+                  >
+
+                    <option value="Head Office">
+                      Head Office
+                    </option>
+
+                    <option value="Chitral">
+                      Chitral
+                    </option>
+
+                    <option value="Darra">
+                      Darra
+                    </option>
+
+                    <option value="Other">
+                      Other
+                    </option>
+
+                  </select>
+
+                </div>
+
+                <div className="col-md-6 mb-3">
+
+                  <label>
+                    Profile Image
+                  </label>
+
+                  <input
+                    type="file"
+                    className="form-control"
+                    accept="image/*"
+                    onChange={handleImage}
+                  />
+
+                </div>
+
+                <div className="col-12 mb-3">
+
+                  <label>
+                    Address
+                  </label>
+
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    name="address"
+                    value={form.address}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* ================================= */}
+            {/* MESSAGE / BIO */}
+            {/* ================================= */}
+
+            <div className="employee-form-section">
+
+              <h4>
+                Message / Bio
+              </h4>
+
+              <textarea
+                className="form-control"
+                rows="5"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder={
+                  form.isManagingDirector
+                    ? "Director's message..."
+                    : "Optional employee message or bio..."
+                }
+              />
+
+            </div>
+
+            {/* ================================= */}
+            {/* IMAGE PREVIEW */}
+            {/* ================================= */}
+
+            <div className="employee-image-preview">
+
+              {preview ? (
+
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="employee-preview"
+                />
+
+              ) : (
+
+                <div className="employee-placeholder">
+                  Image Preview
+                </div>
+
+              )}
+
+            </div>
+
+            {/* ================================= */}
+            {/* ACTIONS */}
+            {/* ================================= */}
+
+            <div className="employee-form-actions">
+
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="btn btn-warning"
+                disabled={loading}
+              >
+                {loading
+                  ? "Saving..."
+                  : "Save Employee"}
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </AdminLayout>
+  );
 }

@@ -90,7 +90,11 @@ const handleSubmit = async (e) => {
     formData.append("annualOutput", form.annualOutput);
     formData.append("area", form.area);
     formData.append("timeline", form.timeline);
-    formData.append("status", form.status);
+    // Map UI status labels back to backend values
+    let statusForApi = form.status;
+    if (form.status === "Ongoing") statusForApi = "Active";
+    if (form.status === "Stopped") statusForApi = "Completed";
+    formData.append("status", statusForApi);
     formData.append("description", form.description);
 
     form.gallery.forEach((file) => {
@@ -238,8 +242,8 @@ const handleSubmit = async (e) => {
                 onChange={handleChange}
               >
                 <option>Planned</option>
-                <option>Active</option>
-                <option>Completed</option>
+                <option>Ongoing</option>
+                <option>Stopped</option>
                 <option>Inactive</option>
               </select>
             </div>

@@ -39,10 +39,11 @@ export default function Employees() {
   const [status, setStatus] = useState("");
 
   const [department, setDepartment] = useState("");
+  const [office, setOffice] = useState("");
 
   useEffect(() => {
     loadEmployees();
-  }, [page, search, status, department]);
+  }, [page, search, status, department, office]);
 
   const loadEmployees = async () => {
 
@@ -54,7 +55,8 @@ export default function Employees() {
         page,
         search,
         status,
-        department
+        department,
+        office
       );
 
       setEmployees(data.employees);
@@ -197,6 +199,23 @@ export default function Employees() {
           </select>
 
           <select
+            value={office}
+            onChange={(e) => setOffice(e.target.value)}
+          >
+
+            <option value="">All Offices</option>
+
+            <option value="Head Office">Head Office</option>
+
+            <option value="Chitral">Chitral</option>
+
+            <option value="Darra">Darra</option>
+
+            <option value="Other">Other</option>
+
+          </select>
+
+          <select
             value={status}
             onChange={(e) =>
               setStatus(e.target.value)
@@ -236,6 +255,8 @@ export default function Employees() {
                 <th>Department</th>
 
                 <th>Designation</th>
+
+                <th>Office</th>
 
                 <th>Status</th>
 
@@ -297,6 +318,8 @@ export default function Employees() {
                     <td>{emp.department}</td>
 
                     <td>{emp.designation}</td>
+
+                    <td>{emp.office}</td>
 
                     <td>
 

@@ -1,7 +1,16 @@
 import API from "./api";
 
-export const getEmployees = async () => {
-    const res = await API.get("/employees");
+export const getEmployees = async (page = 1, search = "", status = "", department = "", office = "") => {
+    const res = await API.get("/employees", {
+        params: {
+            page,
+            search,
+            status,
+            department,
+            office,
+        },
+    });
+
     return res.data;
 };
 

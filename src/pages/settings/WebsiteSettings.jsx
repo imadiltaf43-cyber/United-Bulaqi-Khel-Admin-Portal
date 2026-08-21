@@ -502,7 +502,7 @@ const handleVideoUpload = async () => {
 
         <div className="form-group">
 
-            <label>Projects Completed</label>
+            <label>Projects Stopped</label>
 
             <input
                 type="text"
