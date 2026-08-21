@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 import PasswordInput from "../../components/auth/PasswordInput";
 import AuthLoader from "../../components/auth/AuthLoader";
 
-import logo from "../../assets/images/logo.jpeg";
+import logo from "../../assets/images/logo.png";
 import background from "../../assets/images/login-bg.jpg";
 
 import "./Login.css";
@@ -88,7 +88,9 @@ export default function Login() {
 
                 <span>ENTERPRISES</span>
 
-                <h3>Admin Portal</h3>
+                <h2>ADMIN LOGIN</h2>
+
+                {/* <h3>Admin Portal</h3> */}
 
                 {loading ? (
 

@@ -118,7 +118,7 @@ export default function Investors() {
 
           ||
 
-          investor.kandy
+          investor.village
 
             .toLowerCase()
 
@@ -162,7 +162,7 @@ export default function Investors() {
 
             <p>
 
-              Manage shareholders of both villages.
+              Manage shareholders of both sections.
 
             </p>
 
@@ -202,7 +202,7 @@ export default function Investors() {
 
                     type="text"
 
-                    placeholder="Search by Guardian Name or Kandy"
+                    placeholder="Search by Guardian Name or Section"
 
                     value={search}
 
@@ -236,7 +236,7 @@ export default function Investors() {
 
                   <option value="All">
 
-                    All Villages
+                    All Sections
 
                   </option>
 
