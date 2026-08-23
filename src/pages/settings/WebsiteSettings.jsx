@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 
-import axios from "axios";
-
 import {
     getWebsiteSettings,
     updateWebsiteSettings,
@@ -84,7 +82,7 @@ export default function WebsiteSettings() {
 
         catch (err) {
 
-            console.error(err);
+            // error handled silently
 
         }
 
@@ -110,7 +108,7 @@ const saveSettings = async () => {
 
     catch (err) {
 
-        console.error(err);
+        // error handled silently
 
         alert("Something went wrong.");
 
@@ -148,7 +146,7 @@ const handleVideoUpload = async () => {
 
     catch (err) {
 
-        console.error(err);
+        // error handled silently
 
         alert("Video upload failed.");
 
