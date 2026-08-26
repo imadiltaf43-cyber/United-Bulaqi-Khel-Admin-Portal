@@ -51,6 +51,18 @@ const AddProject = lazy(() => import("./pages/projects/AddProject"));
 const EditProject = lazy(() => import("./pages/projects/EditProject"));
 const ViewProject = lazy(() => import("./pages/projects/ViewProject"));
 
+const SustainabilityEvents = lazy(() =>
+  import("./pages/sustainabilityEvents/SustainabilityEvents")
+);
+
+const AddSustainabilityEvent = lazy(() =>
+  import("./pages/sustainabilityEvents/AddSustainabilityEvent")
+);
+
+const EditSustainabilityEvent = lazy(() =>
+  import("./pages/sustainabilityEvents/EditSustainabilityEvent")
+);
+
 const Jobs = lazy(() => import("./pages/careers/Jobs"));
 const CreateJob = lazy(() => import("./pages/careers/CreateJob"));
 const EditJob = lazy(() => import("./pages/careers/EditJob"));
@@ -398,6 +410,33 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddEvent />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/sustainability-events"
+            element={
+              <ProtectedRoute>
+                <SustainabilityEvents />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/sustainability-events/add"
+            element={
+              <ProtectedRoute>
+                <AddSustainabilityEvent />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/sustainability-events/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditSustainabilityEvent />
               </ProtectedRoute>
             }
           />
