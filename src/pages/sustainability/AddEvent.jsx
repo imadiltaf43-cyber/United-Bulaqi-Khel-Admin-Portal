@@ -19,7 +19,7 @@ export default function AddEvent() {
 
     return () => {
 
-      preview.forEach((url) => URL.revokeObjectURL(url));
+      if (preview) URL.revokeObjectURL(preview);
 
     };
 
@@ -49,9 +49,6 @@ export default function AddEvent() {
     const file = e.target.files[0];
 
     if (!file) return;
-
-    // Revoke previous previews
-    preview.forEach((url) => URL.revokeObjectURL(url));
 
     setForm((prev) => ({ ...prev, image: file }));
 
