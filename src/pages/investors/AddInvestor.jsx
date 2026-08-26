@@ -15,8 +15,6 @@ export default function AddInvestor() {
 
     guardianName: "",
 
-    kandy: "",
-
     village: "Barkali",
 
     shares: "",
@@ -137,41 +135,13 @@ export default function AddInvestor() {
 
                 </div>
 
-                {/* Kandy */}
-
-                <div className="col-md-6">
-
-                  <label className="form-label">
-
-                    Kandy
-
-                  </label>
-
-                  <input
-
-                    type="text"
-
-                    className="form-control"
-
-                    name="kandy"
-
-                    value={form.kandy}
-
-                    onChange={handleChange}
-
-                    required
-
-                  />
-
-                </div>
-
                 {/* Village */}
 
                 <div className="col-md-6">
 
                   <label className="form-label">
 
-                    Village
+                    Section
 
                   </label>
 

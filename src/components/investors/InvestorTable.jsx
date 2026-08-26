@@ -48,9 +48,7 @@ export default function InvestorTable({
 
               <th>Guardian Name</th>
 
-              <th>Kandy</th>
-
-              <th>Village</th>
+              <th>Section</th>
 
               <th>Shares</th>
 
@@ -81,12 +79,6 @@ export default function InvestorTable({
                       {investor.guardianName}
 
                     </strong>
-
-                  </td>
-
-                  <td>
-
-                    {investor.kandy}
 
                   </td>
 

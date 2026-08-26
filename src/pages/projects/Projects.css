@@ -271,7 +271,23 @@
 
 }
 
-.badge.completed{
+.status-pill.ongoing{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.badge.stopped{
+
+    background:#ede9fe;
+
+    color:#6d28d9;
+
+}
+
+.status-pill.stopped{
 
     background:#ede9fe;
 
@@ -280,6 +296,22 @@
 }
 
 .badge.cancelled{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+.status-pill.planned{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+}
+
+.status-pill.cancelled{
 
     background:#fee2e2;
 

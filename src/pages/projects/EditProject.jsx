@@ -53,7 +53,12 @@ export default function EditProject() {
   annualOutput: project.annualOutput || "",
   area: project.area || "",
   timeline: project.timeline || "",
-  status: project.status || "Planned",
+  status:
+    project.status === "Completed"
+      ? "Stopped"
+      : project.status === "Active"
+      ? "Ongoing"
+      : project.status || "Planned",
   description: project.description || "",
   gallery: [],
 });
@@ -116,7 +121,11 @@ setPreview(project.gallery || []);
       formData.append("annualOutput", form.annualOutput);
       formData.append("area", form.area);
       formData.append("timeline", form.timeline);
-      formData.append("status", form.status);
+      // Map UI status labels back to backend values
+      let statusForApi = form.status;
+      if (form.status === "Ongoing") statusForApi = "Active";
+      if (form.status === "Stopped") statusForApi = "Completed";
+      formData.append("status", statusForApi);
       formData.append("description", form.description);
 
       form.gallery.forEach((img) => {
@@ -264,8 +273,8 @@ setPreview(project.gallery || []);
                 onChange={handleChange}
               >
                 <option>Planned</option>
-                <option>Active</option>
-                <option>Completed</option>
+                <option>Ongoing</option>
+                <option>Stopped</option>
                 <option>Inactive</option>
               </select>
             </div>

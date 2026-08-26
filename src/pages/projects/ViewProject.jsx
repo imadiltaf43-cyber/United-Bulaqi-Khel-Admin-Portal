@@ -242,11 +242,25 @@ export default function ViewProject() {
 
                             </span>
 
-                            <span className={`badge ${project.status.toLowerCase().replace(" ","-")}`}>
+                                <span
+                                    className={`badge ${(
+                                        project.status === "Completed"
+                                        ? "Stopped"
+                                        : project.status === "Active"
+                                        ? "Ongoing"
+                                        : project.status
+                                    )
+                                    .toLowerCase()
+                                    .replace(/\s/g, "-")}`}
+                                >
 
-                                {project.status}
+                                    {project.status === "Completed"
+                                        ? "Stopped"
+                                        : project.status === "Active"
+                                        ? "Ongoing"
+                                        : project.status}
 
-                            </span>
+                                </span>
 
                         </div>
 

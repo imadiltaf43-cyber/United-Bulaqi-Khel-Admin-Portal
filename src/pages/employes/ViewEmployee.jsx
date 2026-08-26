@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import AdminLayout from "../../layouts/AdminLayout";
+
 import { getEmployee } from "../../services/employeeService";
 
 import { toast } from "../../utils/toast";
@@ -9,269 +10,533 @@ import { toast } from "../../utils/toast";
 import {
   FaArrowLeft,
   FaEdit,
+  FaUser,
+  FaBuilding,
+  FaBriefcase,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaSitemap,
   FaEnvelope,
   FaPhone,
   FaIdCard,
-  FaBuilding,
-  FaBriefcase,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
 } from "react-icons/fa";
 
 import "./Employees.css";
 
 export default function ViewEmployee() {
-
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const navigate = useNavigate();
-
   const [employee, setEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     loadEmployee();
-
-  }, []);
+  }, [id]);
 
   const loadEmployee = async () => {
-
     try {
+      setLoading(true);
 
       const data = await getEmployee(id);
 
       setEmployee(data);
-
     } catch (err) {
-
       toast.error(
         err.response?.data?.message ||
-        "Failed to load employee."
+          "Failed to load employee."
       );
-
+    } finally {
+      setLoading(false);
     }
-
   };
 
-  if (!employee) {
-
+  if (loading) {
     return (
-
       <AdminLayout>
+        <div className="employee-view-page">
+          <div className="employee-view-card">
+            <div className="employee-loading">
+              Loading employee...
+            </div>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
 
-        <div className="text-center py-5">
+  if (!employee) {
+    return (
+      <AdminLayout>
+        <div className="employee-view-page">
+          <div className="employee-view-card">
+            <h2>Employee Not Found</h2>
 
-          Loading...
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate("/employees")}
+            >
+              <FaArrowLeft />
+              Back to Employees
+            </button>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  const isManagingDirector =
+    employee.isManagingDirector ||
+    employee.designation
+      ?.toLowerCase()
+      .includes("managing director");
+
+  return (
+    <AdminLayout>
+      <div className="employee-view-page">
+
+        {/* ================================= */}
+        {/* HEADER */}
+        {/* ================================= */}
+
+        <div className="employee-view-header">
+
+          <div>
+            <button
+              className="employee-back-btn"
+              onClick={() => navigate("/employees")}
+            >
+              <FaArrowLeft />
+              Back to Employees
+            </button>
+
+            <h2>
+              Employee Details
+            </h2>
+
+            <p>
+              View employee information and
+              organizational placement.
+            </p>
+          </div>
+
+          <button
+            className="employee-edit-btn"
+            onClick={() =>
+              navigate(
+                `/employees/edit/${employee._id}`
+              )
+            }
+          >
+            <FaEdit />
+            Edit Employee
+          </button>
 
         </div>
 
-      </AdminLayout>
-
-    );
-
-  }
-
-  return (
-
-    <AdminLayout>
-
-      <div className="employee-profile">
+        {/* ================================= */}
+        {/* PROFILE */}
+        {/* ================================= */}
 
         <div className="employee-profile-card">
 
-          <div className="employee-profile-top">
+          <div className="employee-profile-left">
 
-            <img
+            <div className="employee-large-avatar">
 
-              src={
-                employee.profileImage ||
-                "/avatar.png"
+              {employee.profileImage ? (
+
+                <img
+                  src={employee.profileImage}
+                  alt={employee.fullName}
+                />
+
+              ) : (
+
+                <FaUser />
+
+              )}
+
+            </div>
+
+            <h2>
+              {employee.fullName}
+            </h2>
+
+            <span className="employee-designation">
+              {employee.designation}
+            </span>
+
+            <span
+              className={
+                employee.status === "Active"
+                  ? "badge active"
+                  : "badge inactive"
               }
+            >
+              {employee.status}
+            </span>
 
-              alt={employee.fullName}
+            <div className="employee-id">
+              {employee.employeeId}
+            </div>
 
-              className="employee-profile-image"
+          </div>
 
-            />
+          {/* ================================= */}
+          {/* BASIC INFORMATION */}
+          {/* ================================= */}
 
-            <div>
+          <div className="employee-profile-right">
 
-              <h2>{employee.fullName}</h2>
+            <div className="employee-info-grid">
 
-              <h5>{employee.designation}</h5>
-
-              <span
-                className={
-                  employee.status === "Active"
-                    ? "badge active"
-                    : "badge inactive"
+              <InfoItem
+                icon={<FaEnvelope />}
+                label="Email"
+                value={
+                  employee.email || "Not provided"
                 }
-              >
+              />
 
-                {employee.status}
+              <InfoItem
+                icon={<FaPhone />}
+                label="Phone"
+                value={
+                  employee.phone || "Not provided"
+                }
+              />
 
-              </span>
+              <InfoItem
+                icon={<FaIdCard />}
+                label="CNIC"
+                value={
+                  employee.cnic || "Not provided"
+                }
+              />
+
+              <InfoItem
+                icon={<FaBuilding />}
+                label="Office"
+                value={
+                  employee.office || "Not provided"
+                }
+              />
+
+              <InfoItem
+                icon={<FaBriefcase />}
+                label="Department"
+                value={
+                  employee.department ||
+                  "Not assigned"
+                }
+              />
+
+              <InfoItem
+                icon={<FaSitemap />}
+                label="Section"
+                value={
+                  employee.section ||
+                  "Not assigned"
+                }
+              />
+
+              <InfoItem
+                icon={<FaCalendarAlt />}
+                label="Joining Date"
+                value={
+                  employee.joiningDate
+                    ? new Date(
+                        employee.joiningDate
+                      ).toLocaleDateString()
+                    : "Not provided"
+                }
+              />
+
+              <InfoItem
+                icon={<FaMapMarkerAlt />}
+                label="Address"
+                value={
+                  employee.address ||
+                  "Not provided"
+                }
+              />
 
             </div>
 
           </div>
 
-          <div className="employee-details-grid">
+        </div>
 
-            <div className="detail-item">
+        {/* ================================= */}
+        {/* ORGANIZATIONAL POSITION */}
+        {/* ================================= */}
 
-              <FaIdCard />
+        <div className="employee-details-section">
 
-              <div>
+          <div className="employee-section-title">
 
-                <label>Employee ID</label>
+            <FaSitemap />
 
-                <p>{employee.employeeId}</p>
+            <h3>
+              Organizational Position
+            </h3>
 
-              </div>
+          </div>
 
-            </div>
+          <div className="employee-hierarchy-info">
 
-            <div className="detail-item">
+            <div className="hierarchy-item">
 
-              <FaEnvelope />
+              <span>
+                Category
+              </span>
 
-              <div>
-
-                <label>Email</label>
-
-                <p>{employee.email || "-"}</p>
-
-              </div>
-
-            </div>
-
-            <div className="detail-item">
-
-              <FaPhone />
-
-              <div>
-
-                <label>Phone</label>
-
-                <p>{employee.phone || "-"}</p>
-
-              </div>
+              <strong>
+                {employee.employeeType ||
+                  "Department"}
+              </strong>
 
             </div>
 
-            <div className="detail-item">
+            <div className="hierarchy-item">
 
-              <FaIdCard />
+              <span>
+                Section
+              </span>
 
-              <div>
-
-                <label>CNIC</label>
-
-                <p>{employee.cnic || "-"}</p>
-
-              </div>
-
-            </div>
-
-            <div className="detail-item">
-
-              <FaBuilding />
-
-              <div>
-
-                <label>Department</label>
-
-                <p>{employee.department}</p>
-
-              </div>
+              <strong>
+                {employee.section ||
+                  employee.department ||
+                  "Not assigned"}
+              </strong>
 
             </div>
 
-            <div className="detail-item">
+            <div className="hierarchy-item">
 
-              <FaBriefcase />
+              <span>
+                Designation
+              </span>
 
-              <div>
-
-                <label>Designation</label>
-
-                <p>{employee.designation}</p>
-
-              </div>
+              <strong>
+                {employee.designation}
+              </strong>
 
             </div>
 
-            <div className="detail-item">
+            <div className="hierarchy-item">
 
-              <FaCalendarAlt />
+              <span>
+                Display Order
+              </span>
+
+              <strong>
+                {employee.order ?? 0}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* ================================= */}
+        {/* REPORTING RELATIONSHIP */}
+        {/* ================================= */}
+
+        <div className="employee-details-section">
+
+          <div className="employee-section-title">
+
+            <FaSitemap />
+
+            <h3>
+              Reporting Relationship
+            </h3>
+
+          </div>
+
+          {isManagingDirector ? (
+
+            <div className="director-root-message">
+
+              <div className="hierarchy-root-icon">
+                <FaSitemap />
+              </div>
 
               <div>
-
-                <label>Joining Date</label>
+                <strong>
+                  Managing Director
+                </strong>
 
                 <p>
+                  This employee is at the top
+                  of the organizational hierarchy.
+                </p>
+              </div>
 
-                  {new Date(
-                    employee.joiningDate
-                  ).toLocaleDateString()}
+            </div>
 
+          ) : employee.reportsTo ? (
+
+            <div className="reports-to-card">
+
+              <div className="reports-to-avatar">
+
+                {employee.reportsTo.profileImage ? (
+
+                  <img
+                    src={
+                      employee.reportsTo.profileImage
+                    }
+                    alt={
+                      employee.reportsTo.fullName
+                    }
+                  />
+
+                ) : (
+
+                  <FaUser />
+
+                )}
+
+              </div>
+
+              <div>
+
+                <span>
+                  Reports To
+                </span>
+
+                <strong>
+                  {employee.reportsTo.fullName}
+                </strong>
+
+                <p>
+                  {employee.reportsTo.designation}
                 </p>
 
               </div>
 
             </div>
 
-            <div className="detail-item">
+          ) : (
+
+            <div className="no-reporting">
+
+              <FaSitemap />
+
+              <span>
+                No reporting relationship
+                assigned.
+              </span>
+
+            </div>
+
+          )}
+
+        </div>
+
+        {/* ================================= */}
+        {/* MESSAGE / BIO */}
+        {/* ================================= */}
+
+        <div className="employee-details-section">
+
+          <div className="employee-section-title">
+
+            <FaUser />
+
+            <h3>
+              Message / Bio
+            </h3>
+
+          </div>
+
+          {employee.message ? (
+
+            <div className="employee-message">
+
+              <p>
+                {employee.message}
+              </p>
+
+            </div>
+
+          ) : (
+
+            <div className="empty-message">
+              No message or bio has been
+              provided.
+            </div>
+
+          )}
+
+        </div>
+
+        {/* ================================= */}
+        {/* ADDRESS */}
+        {/* ================================= */}
+
+        {employee.address && (
+
+          <div className="employee-details-section">
+
+            <div className="employee-section-title">
 
               <FaMapMarkerAlt />
 
-              <div>
+              <h3>
+                Address
+              </h3>
 
-                <label>Address</label>
+            </div>
 
-                <p>{employee.address || "-"}</p>
+            <div className="employee-address">
 
-              </div>
+              {employee.address}
 
             </div>
 
           </div>
 
-          <div className="employee-profile-actions">
+        )}
 
-            <button
-              className="btn btn-secondary"
-              onClick={() => navigate(-1)}
-            >
+      </div>
+    </AdminLayout>
+  );
+}
 
-              <FaArrowLeft />
 
-              Back
+/* =====================================
+   Reusable Information Item
+===================================== */
 
-            </button>
+function InfoItem({
+  icon,
+  label,
+  value,
+}) {
+  return (
+    <div className="employee-info-item">
 
-            <button
-              className="btn btn-warning"
-              onClick={() =>
-                navigate(`/employees/edit/${employee._id}`)
-              }
-            >
+      <div className="employee-info-icon">
+        {icon}
+      </div>
 
-              <FaEdit />
+      <div className="employee-info-content">
 
-              Edit Employee
+        <span>
+          {label}
+        </span>
 
-            </button>
-
-          </div>
-
-        </div>
+        <strong>
+          {value}
+        </strong>
 
       </div>
 
-    </AdminLayout>
-
+    </div>
   );
-
 }

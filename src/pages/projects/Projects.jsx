@@ -43,10 +43,15 @@ export default function Projects() {
     try {
       setLoading(true);
 
+      // Map UI status labels to backend values
+      let statusForApi = status;
+      if (status === "Ongoing") statusForApi = "Active";
+      if (status === "Stopped") statusForApi = "Completed";
+
       const data = await getProjects(
         page,
         search,
-        status,
+        statusForApi,
         category
       );
 
@@ -164,9 +169,9 @@ export default function Projects() {
 
             <option value="">All Status</option>
 
-            <option value="Active">Active</option>
+            <option value="Ongoing">Ongoing</option>
 
-            <option value="Completed">Completed</option>
+            <option value="Stopped">Stopped</option>
 
             <option value="Planned">Planned</option>
 
@@ -286,12 +291,22 @@ export default function Projects() {
         <td>
 
           <span
-            className={`status-pill ${project.status
+            className={`status-pill ${(
+              project.status === "Completed"
+                ? "Stopped"
+                : project.status === "Active"
+                ? "Ongoing"
+                : project.status
+            )
               .toLowerCase()
               .replace(/\s/g, "-")}`}
           >
 
-            {project.status}
+            {project.status === "Completed"
+              ? "Stopped"
+              : project.status === "Active"
+              ? "Ongoing"
+              : project.status}
 
           </span>
 
