@@ -44,11 +44,6 @@ const menuItems = [
     path: "/employees",
   },
   {
-    title: "Sustainability Events",
-    icon: FaLeaf,
-    path: "/sustainability-events",
-  },
-  {
     title: "Investors",
     icon: FaChartLine,
     path: "/investors",
