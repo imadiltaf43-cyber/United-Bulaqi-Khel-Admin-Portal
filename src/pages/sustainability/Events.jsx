@@ -71,7 +71,7 @@ export default function Events() {
         status
       );
 
-      setEvents(data.events || []);
+      setEvents(Array.isArray(data) ? data : data.events || []);
       setPages(data.pages || 1);
     } catch (err) {
       toast.error(
@@ -247,10 +247,7 @@ export default function Events() {
 
                 events.map((event) => {
 
-                  const image =
-                    event.gallery?.length > 0
-                      ? event.gallery[0].url
-                      : "/project.png";
+                  const image = event.image || "/project.png";
 
                   return (
 
@@ -290,10 +287,10 @@ export default function Events() {
 
                         <span
                           className={`category-chip ${categoryClass(
-                            event.category
+                            event.type
                           )}`}
                         >
-                          {event.category}
+                          {event.type}
                         </span>
 
                       </td>
@@ -327,11 +324,9 @@ export default function Events() {
                       <td>
 
                         <span
-                          className={`status-pill ${event.status
-                            .toLowerCase()
-                            .replace(/\s/g, "-")}`}
+                          className={`status-pill ${event.isActive ? "completed" : "planned"}`}
                         >
-                          {event.status}
+                          {event.isActive ? "Active" : "Hidden"}
                         </span>
 
                       </td>

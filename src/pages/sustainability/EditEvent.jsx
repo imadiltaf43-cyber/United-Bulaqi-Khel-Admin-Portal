@@ -22,12 +22,14 @@ export default function EditEvent() {
 
   const [form, setForm] = useState({
     title: "",
-    category: "",
+    type: "Event",
     date: "",
     location: "",
-    status: "Planned",
+    shortDescription: "",
     description: "",
-    gallery: [],
+    order: 0,
+    isActive: true,
+    image: null,
   });
 
   // ---- Load existing event on mount ----
@@ -44,18 +46,20 @@ export default function EditEvent() {
 
       setForm({
         title: event.title || "",
-        category: event.category || "",
+        type: event.type || "Event",
         date: event.date
           ? event.date.substring(0, 10)
           : "",
         location: event.location || "",
-        status: event.status || "Planned",
+        shortDescription: event.shortDescription || "",
         description: event.description || "",
-        gallery: [],
+        order: event.order || 0,
+        isActive: event.isActive ?? true,
+        image: null,
       });
 
       // Show existing gallery images as preview
-      setPreview(event.gallery || []);
+      setPreview(event.image || "");
 
     } catch (err) {
 
@@ -81,19 +85,12 @@ export default function EditEvent() {
 
   const handleGallery = (e) => {
 
-    const files = Array.from(e.target.files);
+    const file = e.target.files[0];
 
-    setForm((prev) => ({
-      ...prev,
-      gallery: files,
-    }));
+    if (!file) return;
+    setForm((prev) => ({ ...prev, image: file }));
 
-    setPreview(
-      files.map((file) => ({
-        preview: URL.createObjectURL(file),
-        file,
-      }))
-    );
+    setPreview(URL.createObjectURL(file));
 
   };
 
@@ -108,15 +105,14 @@ export default function EditEvent() {
       const formData = new FormData();
 
       formData.append("title", form.title);
-      formData.append("category", form.category);
+      formData.append("type", form.type);
       formData.append("date", form.date);
       formData.append("location", form.location);
-      formData.append("status", form.status);
+      formData.append("shortDescription", form.shortDescription);
       formData.append("description", form.description);
-
-      form.gallery.forEach((img) => {
-        formData.append("gallery", img);
-      });
+      formData.append("order", form.order);
+      formData.append("isActive", form.isActive);
+      if (form.image) formData.append("image", form.image);
 
       await updateEvent(id, formData);
 
@@ -171,20 +167,17 @@ export default function EditEvent() {
             </div>
 
             <div className="form-group">
-              <label>Category</label>
+              <label>Type</label>
               <select
-                name="category"
-                value={form.category}
+                name="type"
+                value={form.type}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select</option>
-                <option>Plantation</option>
-                <option>Road Construction</option>
-                <option>Infrastructure</option>
-                <option>Clean Water</option>
-                <option>Seminar</option>
-                <option>Other</option>
+                <option>Event</option>
+                <option>Social Campaign</option>
+                <option>Community Initiative</option>
+                <option>Environmental Project</option>
               </select>
             </div>
 
@@ -210,63 +203,48 @@ export default function EditEvent() {
             </div>
 
             <div className="form-group">
-              <label>Status</label>
-              <select
-                name="status"
-                value={form.status}
+              <label>Display Order</label>
+              <input
+                type="number"
+                min="0"
+                name="order"
+                value={form.order}
                 onChange={handleChange}
-              >
-                <option>Planned</option>
-                <option>Ongoing</option>
-                <option>Completed</option>
-              </select>
+              />
             </div>
 
           </div>
 
           <div className="form-group">
-            <label>Description</label>
+            <label>Short Description</label>
             <textarea
-              rows="5"
-              name="description"
-              value={form.description}
+              rows="3"
+              name="shortDescription"
+              value={form.shortDescription}
               onChange={handleChange}
+              required
             />
           </div>
 
           <div className="form-group">
-            <label>Gallery</label>
+            <label>Full Description</label>
+            <textarea rows="5" name="description" value={form.description} onChange={handleChange} />
+          </div>
+
+          <div className="form-group">
+            <label>Image</label>
             <input
               type="file"
-              multiple
               accept="image/*"
               onChange={handleGallery}
             />
           </div>
 
-          {preview.length > 0 && (
+          {preview && (
 
             <div className="gallery-preview">
 
-              {preview.map((img, index) => {
-
-                const imageUrl =
-                  img.preview ||
-                  img.url ||
-                  "/project.png";
-
-                return (
-
-                  <img
-                    key={index}
-                    src={imageUrl}
-                    alt="Preview"
-                    className="preview-image"
-                  />
-
-                );
-
-              })}
+              <img src={preview} alt="Preview" className="preview-image" />
 
             </div>
 

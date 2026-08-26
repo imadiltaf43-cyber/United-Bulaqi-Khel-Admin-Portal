@@ -12,7 +12,7 @@ export default function AddEvent() {
 
   const [loading, setLoading] = useState(false);
 
-  const [preview, setPreview] = useState([]);
+  const [preview, setPreview] = useState("");
 
   // Revoke object URLs on unmount to avoid memory leaks
   useEffect(() => {
@@ -27,12 +27,14 @@ export default function AddEvent() {
 
   const [form, setForm] = useState({
     title: "",
-    category: "",
+    type: "Event",
     date: "",
     location: "",
-    status: "Planned",
+    shortDescription: "",
     description: "",
-    gallery: [],
+    order: 0,
+    isActive: true,
+    image: null,
   });
 
   const handleChange = (e) => {
@@ -44,21 +46,16 @@ export default function AddEvent() {
 
   const handleGallery = (e) => {
 
-    const files = Array.from(e.target.files);
+    const file = e.target.files[0];
 
-    if (!files.length) return;
+    if (!file) return;
 
     // Revoke previous previews
     preview.forEach((url) => URL.revokeObjectURL(url));
 
-    setForm((prev) => ({
-      ...prev,
-      gallery: files,
-    }));
+    setForm((prev) => ({ ...prev, image: file }));
 
-    setPreview(
-      files.map((file) => URL.createObjectURL(file))
-    );
+    setPreview(URL.createObjectURL(file));
 
   };
 
@@ -71,8 +68,8 @@ export default function AddEvent() {
       return;
     }
 
-    if (!form.gallery.length) {
-      toast.error("Please select at least one image.");
+    if (!form.image) {
+      toast.error("Please select an image.");
       return;
     }
 
@@ -83,15 +80,14 @@ export default function AddEvent() {
       const formData = new FormData();
 
       formData.append("title", form.title);
-      formData.append("category", form.category);
+      formData.append("type", form.type);
       formData.append("date", form.date);
       formData.append("location", form.location);
-      formData.append("status", form.status);
+      formData.append("shortDescription", form.shortDescription);
       formData.append("description", form.description);
-
-      form.gallery.forEach((file) => {
-        formData.append("gallery", file);
-      });
+      formData.append("order", form.order);
+      formData.append("isActive", form.isActive);
+      formData.append("image", form.image);
 
       await createEvent(formData);
 
@@ -141,20 +137,17 @@ export default function AddEvent() {
             </div>
 
             <div className="form-group">
-              <label>Category</label>
+              <label>Type</label>
               <select
-                name="category"
-                value={form.category}
+                name="type"
+                value={form.type}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select</option>
-                <option>Plantation</option>
-                <option>Road Construction</option>
-                <option>Infrastructure</option>
-                <option>Clean Water</option>
-                <option>Seminar</option>
-                <option>Other</option>
+                <option>Event</option>
+                <option>Social Campaign</option>
+                <option>Community Initiative</option>
+                <option>Environmental Project</option>
               </select>
             </div>
 
@@ -181,51 +174,52 @@ export default function AddEvent() {
             </div>
 
             <div className="form-group">
-              <label>Status</label>
-              <select
-                name="status"
-                value={form.status}
+              <label>Display Order</label>
+              <input
+                type="number"
+                min="0"
+                name="order"
+                value={form.order}
                 onChange={handleChange}
-              >
-                <option>Planned</option>
-                <option>Ongoing</option>
-                <option>Completed</option>
-              </select>
+              />
             </div>
 
           </div>
 
           <div className="form-group">
-            <label>Description</label>
+            <label>Short Description</label>
+            <textarea
+              rows="3"
+              name="shortDescription"
+              value={form.shortDescription}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Full Description</label>
             <textarea
               rows="5"
               name="description"
               value={form.description}
               onChange={handleChange}
-              placeholder="Describe the event, its impact, and outcomes..."
             />
           </div>
 
           <div className="form-group">
-            <label>Gallery</label>
+            <label>Image</label>
             <input
               type="file"
-              multiple
               accept="image/*"
               onChange={handleGallery}
+              required
             />
           </div>
 
-          {preview.length > 0 && (
+          {preview && (
             <div className="gallery-preview">
-              {preview.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt="Preview"
-                  className="preview-image"
-                />
-              ))}
+              <img src={preview} alt="Preview" className="preview-image" />
             </div>
           )}
 

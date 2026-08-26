@@ -97,18 +97,8 @@ export default function ViewEvent() {
 
                     <div className="event-gallery-grid">
 
-                        {event.gallery && event.gallery.length > 0 ? (
-
-                            event.gallery.map((image, index) => (
-
-                                <img
-                                    key={index}
-                                    src={image.url}
-                                    alt={`${event.title}-${index}`}
-                                />
-
-                            ))
-
+                        {event.image ? (
+                            <img src={event.image} alt={event.title} />
                         ) : (
 
                             <p>No images uploaded.</p>
@@ -133,9 +123,9 @@ export default function ViewEvent() {
 
                             <span>
 
-                                <strong>Category: </strong>
+                                <strong>Type: </strong>
 
-                                {event.category}
+                                {event.type}
 
                             </span>
 
@@ -181,9 +171,9 @@ export default function ViewEvent() {
 
                             </span>
 
-                            <span className={`status-pill ${event.status.toLowerCase().replace(" ", "-")}`}>
+                            <span className={`status-pill ${event.isActive ? "completed" : "planned"}`}>
 
-                                {event.status}
+                                {event.isActive ? "Active" : "Hidden"}
 
                             </span>
 

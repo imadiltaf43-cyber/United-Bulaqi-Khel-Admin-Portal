@@ -11,7 +11,7 @@ export const getEvents = async (
   status = ""
 ) => {
 
-  const { data } = await API.get("/sustainability-events", {
+  const { data } = await API.get("/sustainability-events/admin", {
     params: {
       page,
       search,
