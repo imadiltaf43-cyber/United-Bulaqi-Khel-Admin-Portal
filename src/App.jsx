@@ -19,91 +19,37 @@ const AddEmployee = lazy(() => import("./pages/employes/AddEmployee"));
 const EditEmployee = lazy(() => import("./pages/employes/EditEmployee"));
 const ViewEmployee = lazy(() => import("./pages/employes/ViewEmployee"));
 
-
 // ============================
 // Lazy Loaded Pages
 // ============================
 
-const Dashboard = lazy(() =>
-  import("./pages/dashboard/Dashboard")
-);
+const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
 
-const Minerals = lazy(() =>
-  import("./pages/minerals/Minerals")
-);
+const Minerals = lazy(() => import("./pages/minerals/Minerals"));
+const AddMineral = lazy(() => import("./pages/minerals/AddMineral"));
+const EditMineral = lazy(() => import("./pages/minerals/EditMineral"));
+const ViewMineral = lazy(() => import("./pages/minerals/ViewMineral"));
 
-const AddMineral = lazy(() =>
-  import("./pages/minerals/AddMineral")
-);
+const Settings = lazy(() => import("./pages/settings/Settings"));
+const Profile = lazy(() => import("./pages/settings/Profile"));
+const ChangePassword = lazy(() => import("./pages/settings/ChangePassword"));
+const ChangeEmail = lazy(() => import("./pages/settings/ChangeEmail"));
+const Security = lazy(() => import("./pages/settings/Security"));
+const WebsiteSettings = lazy(() => import("./pages/settings/WebsiteSettings"));
 
-const EditMineral = lazy(() =>
-  import("./pages/minerals/EditMineral")
-);
-
-const ViewMineral = lazy(() =>
-  import("./pages/minerals/ViewMineral")
-);
-
-const Settings = lazy(() =>
-  import("./pages/settings/Settings")
-);
-
-const Profile = lazy(() =>
-  import("./pages/settings/Profile")
-);
-
-const ChangePassword = lazy(() =>
-  import("./pages/settings/ChangePassword")
-);
-
-const ChangeEmail = lazy(() =>
-  import("./pages/settings/ChangeEmail")
-);
-
-const Security = lazy(() =>
-  import("./pages/settings/Security")
-);
-
-const WebsiteSettings = lazy(() =>
-  import("./pages/settings/WebsiteSettings")
-);
-
-
-const Investors = lazy(() =>
-  import("./pages/investors/Investors")
-);
-
-const AddInvestor = lazy(() =>
-  import("./pages/investors/AddInvestor")
-);
-
-const EditInvestor = lazy(() =>
-  import("./pages/investors/EditInvestor")
-);
-
-const ViewInvestor = lazy(() =>
-  import("./pages/investors/ViewInvestor")
-);
+const Investors = lazy(() => import("./pages/investors/Investors"));
+const AddInvestor = lazy(() => import("./pages/investors/AddInvestor"));
+const EditInvestor = lazy(() => import("./pages/investors/EditInvestor"));
+const ViewInvestor = lazy(() => import("./pages/investors/ViewInvestor"));
 
 // -----------------------------------
 // Projects
 // -----------------------------------
 
-const Projects = lazy(() =>
-  import("./pages/projects/Projects")
-);
-
-const AddProject = lazy(() =>
-  import("./pages/projects/AddProject")
-);
-
-const EditProject = lazy(() =>
-  import("./pages/projects/EditProject")
-);
-
-const ViewProject = lazy(() =>
-  import("./pages/projects/ViewProject")
-);
+const Projects = lazy(() => import("./pages/projects/Projects"));
+const AddProject = lazy(() => import("./pages/projects/AddProject"));
+const EditProject = lazy(() => import("./pages/projects/EditProject"));
+const ViewProject = lazy(() => import("./pages/projects/ViewProject"));
 
 const Jobs = lazy(() => import("./pages/careers/Jobs"));
 const CreateJob = lazy(() => import("./pages/careers/CreateJob"));
@@ -111,16 +57,20 @@ const EditJob = lazy(() => import("./pages/careers/EditJob"));
 const JobApplications = lazy(() => import("./pages/careers/JobApplications"));
 const ViewApplication = lazy(() => import("./pages/careers/ViewApplication"));
 
+// -----------------------------------
+// Sustainability Events
+// -----------------------------------
+
+const Events = lazy(() => import("./pages/sustainability/Events"));
+const AddEvent = lazy(() => import("./pages/sustainability/AddEvent"));
+const EditEvent = lazy(() => import("./pages/sustainability/EditEvent"));
+const ViewEvent = lazy(() => import("./pages/sustainability/ViewEvent"));
 
 // contact messages
 
-const Messages = lazy(() =>
-  import("./pages/contact/Messages")
-);
+const Messages = lazy(() => import("./pages/contact/Messages"));
+const ViewMessage = lazy(() => import("./pages/contact/ViewMessage"));
 
-const ViewMessage = lazy(() =>
-  import("./pages/contact/ViewMessage")
-);
 function App() {
   return (
     <BrowserRouter>
@@ -156,6 +106,21 @@ function App() {
           <Route
             path="/login"
             element={<Login />}
+          />
+
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword />}
+          />
+
+          <Route
+            path="/verify-otp"
+            element={<VerifyOtp />}
+          />
+
+          <Route
+            path="/reset-password"
+            element={<ResetPassword />}
           />
 
           {/* Dashboard */}
@@ -251,10 +216,15 @@ function App() {
             }
           />
 
+          {/* C-06: Wrap /settings/website in ProtectedRoute */}
           <Route
-    path="/settings/website"
-    element={<WebsiteSettings />}
-/>
+            path="/settings/website"
+            element={
+              <ProtectedRoute>
+                <WebsiteSettings />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Careers */}
           <Route
@@ -302,27 +272,6 @@ function App() {
             }
           />
 
-          {/* 404 */}
-          <Route
-            path="*"
-            element={<Navigate to="/login" replace />}
-          />
-
-          <Route
-    path="/forgot-password"
-    element={<ForgotPassword />}
-    />
-
-    <Route
-      path="/verify-otp"
-      element={<VerifyOtp />}
-    />
-
-    <Route
-      path="/reset-password"
-      element={<ResetPassword />}
-    />
-
           {/* Employees */}
           <Route
             path="/employees"
@@ -361,101 +310,140 @@ function App() {
           />
 
           {/* Investors */}
+          <Route
+            path="/investors"
+            element={
+              <ProtectedRoute>
+                <Investors />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/investors"
-  element={
-    <ProtectedRoute>
-      <Investors />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/investors/add"
+            element={
+              <ProtectedRoute>
+                <AddInvestor />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/investors/add"
-  element={
-    <ProtectedRoute>
-      <AddInvestor />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/investors/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditInvestor />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/investors/edit/:id"
-  element={
-    <ProtectedRoute>
-      <EditInvestor />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/investors/view/:id"
+            element={
+              <ProtectedRoute>
+                <ViewInvestor />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/investors/view/:id"
-  element={
-    <ProtectedRoute>
-      <ViewInvestor />
-    </ProtectedRoute>
-  }
-/>
+          {/* Projects */}
+          <Route
+            path="/projects"
+            element={
+              <ProtectedRoute>
+                <Projects />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* Projects */}  
-<Route
-  path="/projects"
-  element={
-    <ProtectedRoute>
-      <Projects />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/projects/add"
+            element={
+              <ProtectedRoute>
+                <AddProject />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/projects/add"
-  element={
-    <ProtectedRoute>
-      <AddProject />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/projects/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditProject />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/projects/edit/:id"
-  element={
-    <ProtectedRoute>
-      <EditProject />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/projects/view/:id"
+            element={
+              <ProtectedRoute>
+                <ViewProject />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/projects/view/:id"
-  element={
-    <ProtectedRoute>
-      <ViewProject />
-    </ProtectedRoute>
-  }
-/>
+          {/* Sustainability Events */}
+          <Route
+            path="/sustainability"
+            element={
+              <ProtectedRoute>
+                <Events />
+              </ProtectedRoute>
+            }
+          />
 
-    {/* contact messages */}
+          <Route
+            path="/sustainability/add"
+            element={
+              <ProtectedRoute>
+                <AddEvent />
+              </ProtectedRoute>
+            }
+          />
 
-    <Route
-  path="/messages"
-  element={
-    <ProtectedRoute>
-      <Messages />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/sustainability/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditEvent />
+              </ProtectedRoute>
+            }
+          />
 
-<Route
-  path="/messages/:id"
-  element={
-    <ProtectedRoute>
-      <ViewMessage />
-    </ProtectedRoute>
-  }
-/>
+          <Route
+            path="/sustainability/view/:id"
+            element={
+              <ProtectedRoute>
+                <ViewEvent />
+              </ProtectedRoute>
+            }
+          />
 
-          
+          {/* Contact Messages */}
+          <Route
+            path="/messages"
+            element={
+              <ProtectedRoute>
+                <Messages />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/messages/:id"
+            element={
+              <ProtectedRoute>
+                <ViewMessage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* C-05: Wildcard catch-all MUST be the very last route */}
+          <Route
+            path="*"
+            element={<Navigate to="/login" replace />}
+          />
 
         </Routes>
 

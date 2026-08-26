@@ -2,6 +2,7 @@ import {
   FaTachometerAlt,
   FaMountain,
   FaProjectDiagram,
+  FaLeaf,
   FaTruckMonster,
   FaUsers,
   FaChartLine,
@@ -26,6 +27,11 @@ const menuItems = [
     title: "Projects",
     icon: FaProjectDiagram,
     path: "/projects",
+  },
+  {
+    title: "Sustainability",
+    icon: FaLeaf,
+    path: "/sustainability",
   },
   {
     title: "Equipment",
